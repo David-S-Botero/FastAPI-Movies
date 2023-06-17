@@ -86,10 +86,4 @@ def change_field_by_id(id:int, field:str, new_val):
     else:
         return {}
     
-data = db.read_data()
-for i, item in enumerate(data):
-    print(item)
-    if item.id==2:
-        data[i]=Movie(2,"string", "string", "string", 3.2, "string")
-print(data)
     
