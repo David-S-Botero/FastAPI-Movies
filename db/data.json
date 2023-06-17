@@ -1,11 +1,11 @@
 [
       {
             "id": 1,
-            "title": "sadsad",
-            "overview": "sadsad",
-            "year": "asdasd",
-            "category": "string",
-            "rating": 0.0
+            "title": "Movie",
+            "overview": "Movie Overview",
+            "year": "2023",
+            "category": "Movie Category",
+            "rating": 10.0
       },
       {
             "id": 2,
@@ -22,5 +22,21 @@
             "year": "string",
             "category": "string",
             "rating": 0.0
+      },
+      {
+            "id": 7,
+            "title": "Movie",
+            "overview": "Movie Overview",
+            "year": "2023",
+            "category": "Movie Category",
+            "rating": 10.0
+      },
+      {
+            "id": 15,
+            "title": "Movieasdasdsa",
+            "overview": "Movie Overviewasdasdas",
+            "year": "2023asd",
+            "category": "Movie Categorysad",
+            "rating": 10.0
       }
 ]

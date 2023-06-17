@@ -1,6 +1,5 @@
 import json
-from models.models import Movie
-
+from models import Movie
 
 def read_data()->list:
     with open("db/data.json") as f:
@@ -23,16 +22,16 @@ def add_data(model, del_data=False):
         with open("db/data.json","w") as f:
             json.dump(model_json,f,indent=6,ensure_ascii=False)
     else:
-        model_json = {
-        "id" : model.id,
-        "title" : model.title,
-        "overview" : model.overview,
-        "year" : model.year,
-        "category" : model.category,
-        "rating" : model.rating
-        }
         txt = read_data()
-        txt.append(model_json)
+        txt.append(model)
+        model_json = list(map(
+            lambda i :{
+                "id" : i.id,
+                "title" : i.title,
+                "overview" : i.overview,
+                "year" : i.year,
+                "category" : i.category,
+                "rating" : i.rating
+                }, txt))   
         with open("db/data.json","w") as f:
-            json.dump(txt,f,indent=6,ensure_ascii=False)
-
+            json.dump(model_json,f,indent=6,ensure_ascii=False)
