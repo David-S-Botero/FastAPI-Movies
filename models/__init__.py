@@ -21,3 +21,12 @@ class Movie():
         self.rating=rating
         self.overview=overview
 
+@dataclass
+class User():
+
+    email:str
+    password:str
+    
+    def __init__(self, email:str, password:str):
+        self.email=email
+        self.password=password

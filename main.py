@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Path, Query, Body
+from fastapi import FastAPI, Path, Query, Body, Depends
 from fastapi.responses import HTMLResponse, JSONResponse
 from typing import List
 import db
 import copy
-from models import Movie
+from models import *
+from jwt_manager import create_token, JWTBearer
 
 app = FastAPI()
 
@@ -14,7 +15,7 @@ app.version = "0.0.1"
 def message() -> str:
     return HTMLResponse('<h1>Hello World!</h1>')
 
-@app.get('/movies', tags=['movies'], response_model=List[Movie], status_code=200)
+@app.get('/movies', tags=['movies'], response_model=List[Movie], status_code=200, dependencies=[Depends(JWTBearer())])
 def get_movies() -> List[Movie]:
     return db.read_data()
 
@@ -91,3 +92,10 @@ def change_field_by_id(id:int = Path(ge=0), field:str = Query(min_length=1), new
         return {"message":"Any movie found with that id."}
     
     
+@app.post('/login', tags=['auth'])
+def login(user: User):
+    if user.email == "admin@gmail.com" and user.password == "admin":
+        token:str = create_token(user.__dict__)
+        return JSONResponse(content=token, status_code=200)
+    else:
+        return JSONResponse(content={"message":"The data don't match."},status_code=404)
