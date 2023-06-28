@@ -229,4 +229,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#Database
+database.sqlite
+
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,python,web

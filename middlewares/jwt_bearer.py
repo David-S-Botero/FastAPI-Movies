@@ -1,18 +1,7 @@
-from jwt import encode, decode
 from fastapi import HTTPException, Request
 from fastapi.security import HTTPBearer
-from dotenv import load_dotenv
-import os
+from utils.jwt_manager import validate_token
 
-load_dotenv()
-
-def create_token(data:dict) -> str:
-    token:str = encode(payload=data, key=os.getenv('SECRET_KEY'), algorithm="HS256")
-    return token
-
-def validate_token(token:str) -> dict:
-    data:dict = decode(token,os.getenv('SECRET_KEY'), algorithms=['HS256'])
-    return data
 
 class JWTBearer(HTTPBearer):
 
