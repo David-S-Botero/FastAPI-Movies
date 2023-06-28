@@ -28,20 +28,20 @@ def get_movie_by_id(id: int = Path(ge=0)) -> dict:
     return JSONResponse(status_code=200, content={"message":"The movie has been found.","movie":jsonable_encoder(result)})
     
 
-@movie_router.get('/movies/', tags=['movies'], response_model=List[Movie])
+@movie_router.get('/movies/', tags=['movies'], response_model=List[Movie], dependencies=[Depends(JWTBearer())])
 def get_movies_by_category(category:str = Query(min_length=1, max_length=20)) -> List[Movie]:
     database = session()
     result = MovieService(database).get_movies_by_category(category=category)
     return JSONResponse(status_code=200, content=jsonable_encoder(result)) 
 
 
-@movie_router.post('/movies', tags=['movies'], response_model=Movie)
+@movie_router.post('/movies', tags=['movies'], response_model=Movie, dependencies=[Depends(JWTBearer())])
 def add_movie(movie : Movie = Body()) -> Movie:
     database = session()
     MovieService(database).create_movie(movie=movie)
     return JSONResponse(status_code=200, content={"message" : "Movie added"})
     
-@movie_router.delete('/movies', tags=['movies'], response_model=dict)
+@movie_router.delete('/movies', tags=['movies'], response_model=dict, dependencies=[Depends(JWTBearer())])
 def delete_movie_by_id(id: int = Query(ge=0))->dict:
     database = session()
     result : MovieModel = MovieService(database).get_movie_by_id(id)
@@ -50,7 +50,7 @@ def delete_movie_by_id(id: int = Query(ge=0))->dict:
     MovieService(database).delete_movie(id)
     return JSONResponse(status_code=200, content={"message":"Movie removed."})
 
-@movie_router.put('/movies/{id}', tags=['movies'], response_model=dict)
+@movie_router.put('/movies/{id}', tags=['movies'], response_model=dict, dependencies=[Depends(JWTBearer())])
 def change_all_by_id(id:int = Path(ge=0), movie:Movie = Body()) -> dict:
     database = session()
     result = MovieService(database).get_movie_by_id(id)
@@ -60,7 +60,7 @@ def change_all_by_id(id:int = Path(ge=0), movie:Movie = Body()) -> dict:
     return JSONResponse(status_code=200, content={"message":"Movie changed."})
         
 
-@movie_router.put('/movies/{id}/', tags=['movies'], response_model=dict)
+@movie_router.put('/movies/{id}/', tags=['movies'], response_model=dict, dependencies=[Depends(JWTBearer())])
 def change_field_by_id(id:int = Path(ge=0), field:str = Query(min_length=1), new_val = Query())->dict:
     database = session()
     result = MovieService(database).get_movie_by_id(id)
